@@ -85,7 +85,7 @@ func LoadSettings(filename string) (*Settings, error) {
 	}
 	s.filename = filename
 
-	var logFileDir string = common.RunPath() + "/" + s.LogFile
+	var logFileDir string = s.LogFile
 	fmt.Printf("Log file: %s\n", logFileDir)
 	if err = common.SetupLogging(s.LogLevel, logFileDir); err != nil {
 		return nil, fmt.Errorf("Unable to setup logger: %s", err)
@@ -212,7 +212,7 @@ func (s *Settings) Save() error {
 
 // unlockedSave expects the calling function to lock the RWMutex
 func (s *Settings) unlockedSave() error {
-	marshaled, err := json.MarshalIndent(s, "", "\t")
+	/*marshaled, err := json.MarshalIndent(s, "", "\t")
 	if err != nil {
 		return fmt.Errorf("error marshaling: %s", err)
 	}
@@ -220,7 +220,10 @@ func (s *Settings) unlockedSave() error {
 	err = ioutil.WriteFile(s.filename, marshaled, 0777)
 	if err != nil {
 		return fmt.Errorf("error saving: %s", err)
-	}
+	}*/
+
+	common.LogInfof("Ignored file saving")
+
 	return nil
 }
 
